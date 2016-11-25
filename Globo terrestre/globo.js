@@ -9,6 +9,7 @@
     var scene;
     var camera;
     var gui;
+    var spotLight;
 
     var stats = new Stats();
 
@@ -65,11 +66,17 @@
         camGUIFolder.add (guiValues, 'cameraY',-100, 100).step (1);
         camGUIFolder.add (guiValues, 'cameraZ',-100, 100).step (1);
 
+        var lightGUIFolder = gui.addFolder ('Light');
+
+        lightGUIFolder.add (guiValues, 'lightPosX',-100, 100).step (1);
+        lightGUIFolder.add (guiValues, 'lightPosY',-100, 100).step (1);
+        lightGUIFolder.add (guiValues, 'lightPosZ',-100, 100).step (1);
+
         document.body.appendChild( stats.dom );
 
         document.body.appendChild(renderer.domElement);
 
-    };
+    }
 
     function draw(){
 
@@ -80,12 +87,12 @@
         earthMesh.name = 'earth';
         scene.add(earthMesh);
 
-        var spotLight = new THREE.SpotLight(0xffffff);
-        spotLight.position.set(0, 100, 0);
+        spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(guiValues.lightPosX, guiValues.lightPosY, guiValues.lightPosZ);
         spotLight.castShadow = true;
         scene.add(spotLight);
 
-    };
+    }
 
     function render() {
         stats.begin();
@@ -95,14 +102,14 @@
         //cameraControl.update();
 
         camera.position.set (guiValues.cameraX, guiValues.cameraY, guiValues.cameraZ);
-
+        spotLight.position.set(guiValues.lightPosX, guiValues.lightPosY, guiValues.lightPosZ);
 
         camera.lookAt(scene.position);
         renderer.render(scene, camera);
 
         stats.end();
         requestAnimationFrame(render);
-    };
+    }
 
     window.onload = function(){
         init();
