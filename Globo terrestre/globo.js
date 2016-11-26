@@ -11,6 +11,8 @@
     var gui;
     var spotLight;
 
+    var somethingToDo = true;
+
     var stats = new Stats();
 
     var guiValues = new function(){
@@ -111,9 +113,15 @@
         requestAnimationFrame(render);
     }
 
+    //testing some "game" functionality
+    function updateScene(){
+
+    }
+
     window.onload = function(){
         init();
         draw();
+        updateScene();
         render();
     };
 
