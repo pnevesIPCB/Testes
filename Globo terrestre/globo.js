@@ -10,6 +10,8 @@
     var camera;
     var gui;
     var spotLight;
+    var earthMesh;
+    var position = {x: 0, y:0, z:0};
 
     var somethingToDo = true;
 
@@ -85,7 +87,7 @@
         var sphereGeometry = new THREE.SphereGeometry(15, 30, 30);
         //var sphereMaterial = new THREE.MeshNormalMaterial();
         var sphereMaterial = new THREE.MeshLambertMaterial({color: 0x00FF00});
-        var earthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        earthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         earthMesh.name = 'earth';
         scene.add(earthMesh);
 
@@ -106,6 +108,8 @@
         camera.position.set (guiValues.cameraX, guiValues.cameraY, guiValues.cameraZ);
         spotLight.position.set(guiValues.lightPosX, guiValues.lightPosY, guiValues.lightPosZ);
 
+        updateScene();
+
         camera.lookAt(scene.position);
         renderer.render(scene, camera);
 
@@ -116,12 +120,15 @@
     //testing some "game" functionality
     function updateScene(){
 
+        position.x +=0.1;
+
+        earthMesh.position.set (position.x, position.y, position.z);
     }
 
     window.onload = function(){
         init();
         draw();
-        updateScene();
+
         render();
     };
 
